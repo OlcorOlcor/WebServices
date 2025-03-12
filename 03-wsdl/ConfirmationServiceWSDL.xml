@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:ns="http://bowling.com/" 
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+             xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+             xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+             targetNamespace="http://bowling.com/"
+>
+    <types>
+        <xs:schema targetNamespace="http://bowling.com/">
+            <xs:element name="confirmRequest" type="xs:string"/>
+            <xs:element name="confirmResponse" type="xs:string"/>
+        </xs:schema>
+    </types>
+
+    <wsdl:message name="confirmRequest">
+        <wsdl:part name="parameters" element="ns:confirmRequest"/>
+    </wsdl:message>
+
+    <wsdl:message name="confirmResponse"> 
+        <wsdl:part name="parameters" element="ns:confirmResponse"/>
+    </wsdl:message>
+
+    <wsdl:portType name="ConfirmationService">
+        <wsdl:operation name="confirm">
+            <wsdl:input message="ns:confirmRequest"/>
+            <wsdl:output message="ns:confirmResponse"/>
+        </wsdl:operation>
+    </wsdl:portType>
+
+    <wsdl:binding name="ConfirmationServiceBinding" type="ns:ConfirmationService">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="confirm">
+            <soap:operation soapAction="" />
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+
+    <wsdl:service name="ConfirmationService">
+        <wsdl:port name="ConfirmationServicePort" binding="ns:ConfirmationServiceBinding">
+            <soap:address location="http://localhost:8000/ConfirmationService"/>
+        </wsdl:port>
+    </wsdl:service>
+
+</definitions>

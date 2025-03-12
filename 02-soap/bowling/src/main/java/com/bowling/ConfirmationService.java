@@ -4,5 +4,5 @@ package com.bowling;
 public interface ConfirmationService {
     
     @jakarta.jws.WebMethod
-    public void confirm();
+    public void confirmRequest();
 }

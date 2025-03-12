@@ -2,6 +2,7 @@ package com.bowling;
 
 import jakarta.jws.WebService;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -9,12 +10,12 @@ import java.util.regex.Pattern;
 
 @WebService(endpointInterface = "com.bowling.RegistrationService")
 public class RegistrationServiceImpl implements RegistrationService {
-    List<Registration> registratrions;
+    List<Registration> registratrions = new ArrayList<Registration>();
     
     private static final int SLOT_DURATION = 30;
 
     private boolean checkIfAvailable(LocalDateTime date, int slots) {
-        if (slots <= 0) {
+        if (slots <= 0 || date == null) {
             return false;
         }
         for (Registration r : this.registratrions) {
@@ -42,12 +43,29 @@ public class RegistrationServiceImpl implements RegistrationService {
     }
 
     @Override
-    public String register(String name, String surname, String email, int slots, LocalDateTime date, String ISIC, String coupon) {
-        if (name == "" || surname == "") {
+    public String registrationRequest(String name, String surname, String email, int slots, String date, String ISIC, String coupon) {
+        
+        System.out.println("##############");
+        System.out.println(surname);
+        System.out.println(email);
+        System.out.println(slots);
+        System.out.println(date);
+        System.out.println(ISIC);
+        System.out.println(coupon);
+        System.out.println("##############");
+
+        LocalDateTime convertedDate;
+        try {
+            convertedDate = LocalDateTime.parse(date);
+        } catch (Exception e) {
+            return "Registration failed: Invalid date format.";
+        }
+
+        if (name == "" || surname == "" || name == null || surname == null) {
             return "Registration failed: Name and surname must not be empty.";
         }
 
-        if (!checkIfAvailable(date, slots)) {
+        if (!checkIfAvailable(convertedDate, slots)) {
             return "Registration failed: Your chosen time slot is already taken.";
         }
 
@@ -59,7 +77,7 @@ public class RegistrationServiceImpl implements RegistrationService {
 
         // VALID
 
-        Registration reg = new Registration(name, surname, email, date, slots, ISIC, coupon);
+        Registration reg = new Registration(name, surname, email, convertedDate, slots, ISIC, coupon);
         this.registratrions.add(reg);
 
         double cost = getPrice(slots, ISIC, coupon);
