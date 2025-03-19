@@ -11,6 +11,7 @@ public class ConfirmationServiceImpl implements ConfirmationService {
 
     @Override
     public void confirmRequest() {
+        System.out.println("test");
         for (Employee e : employees) {
             e.notifyRegistration();
         }
