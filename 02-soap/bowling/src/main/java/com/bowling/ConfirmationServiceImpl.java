@@ -9,9 +9,9 @@ import java.util.List;
 public class ConfirmationServiceImpl implements ConfirmationService {
     List<Employee> employees = new ArrayList<Employee>();
 
+    @jakarta.jws.WebMethod
     @Override
     public void confirmRequest() {
-        System.out.println("test");
         for (Employee e : employees) {
             e.notifyRegistration();
         }

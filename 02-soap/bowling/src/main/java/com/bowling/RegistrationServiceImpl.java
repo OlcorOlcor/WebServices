@@ -42,18 +42,9 @@ public class RegistrationServiceImpl implements RegistrationService {
         return price;
     }
 
+    @jakarta.jws.WebMethod
     @Override
     public String registrationRequest(String name, String surname, String email, int slots, String date, String ISIC, String coupon) {
-        
-        System.out.println("##############");
-        System.out.println(surname);
-        System.out.println(email);
-        System.out.println(slots);
-        System.out.println(date);
-        System.out.println(ISIC);
-        System.out.println(coupon);
-        System.out.println("##############");
-
         LocalDateTime convertedDate;
         try {
             convertedDate = LocalDateTime.parse(date);
