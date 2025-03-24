@@ -11,10 +11,21 @@ public class ConfirmationServiceImpl implements ConfirmationService {
 
     @jakarta.jws.WebMethod
     @Override
-    public void confirmRequest() {
-        for (Employee e : employees) {
-            e.notifyRegistration();
+    public void confirmRequest(List<Integer> idsToNotify) {
+        if (idsToNotify.isEmpty()) {
+            for (Employee e : employees) {
+                e.notifyRegistration();
+            }
+        } else {
+            for (Integer id : idsToNotify) {
+                for (Employee e : employees) {
+                    if (e.getId() == id) {
+                        e.notifyRegistration();
+                    }
+                }
+            }
         }
+        
     }
     
 }
